@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class Medicine {
 	@Id
 	@Column(name="medicine_id")
-	private String medicineId;
+	private int medicineId;
 	@Column(name="medicine_Name")
 	private String medicineName;
 	@Column(name="medicine_Cost")
@@ -28,10 +28,10 @@ public class Medicine {
 	private Category category;
 	
 	
-	public String getMedicineId() {
+	public int getMedicineId() {
 		return medicineId;
 	}
-	public void setMedicineId(String medicineId) {
+	public void setMedicineId(int medicineId) {
 		this.medicineId = medicineId;
 	}
 	public String getMedicineName() {
