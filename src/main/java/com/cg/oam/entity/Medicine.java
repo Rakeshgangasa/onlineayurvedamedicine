@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="medicine_tbl")
 public class Medicine {
@@ -24,6 +26,7 @@ public class Medicine {
 	private LocalDate expiryDate;
 	@Column(name="company_Name")
 	private String companyName;
+	@JsonIgnore
 	@ManyToOne
 	private Category category;
 	

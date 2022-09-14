@@ -6,12 +6,14 @@ import org.springframework.stereotype.Repository;
 import com.cg.oam.entity.Medicine;
 
 @Repository
-public interface MedicineRepository extends JpaRepository <Medicine,String> {
+public interface MedicineRepository extends JpaRepository <Medicine,Integer> {
 
-	Medicine findMedicineById(int id);
+	/* Medicine findMedicineById(int id); */
 	
-	Medicine findMedicineByName(String name);
+	Medicine findByMedicineName(String name);
 	
-	void deleteByName(String name);
+	void deleteByMedicineName(String name);
+
+	Medicine findByMedicineId(int medicineId);
 
 }

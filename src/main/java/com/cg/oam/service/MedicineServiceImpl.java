@@ -4,14 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.cg.oam.entity.Medicine;
 import com.cg.oam.exception.MedicineNotFoundException;
 import com.cg.oam.repository.MedicineRepository;
 
 @Service
 public class MedicineServiceImpl implements MedicineService {
-	
 
 	@Autowired
 	MedicineRepository medicineRepository;
@@ -25,42 +23,39 @@ public class MedicineServiceImpl implements MedicineService {
 	@Override
 	public Medicine addMedicine(Medicine medicine) {
 		// TODO Auto-generated method stub
-		System.out.println("paracetmol");
+		
 		return medicineRepository.save(medicine);
 		
 	}
 
 	public Medicine getMedicineById(int id) {
 		// TODO Auto-generated method stub
-		return medicineRepository.findMedicineById(id);
+		return medicineRepository.findById(id).get();
 		
 	}
 	public Medicine getMedicineByName(String name) {
 		// TODO Auto-generated method stub
-		return medicineRepository.findMedicineByName(name);
+		return medicineRepository.findByMedicineName(name);
 		
 	}
 
-	@Override
-	public void deleteMedicine(String name) {
-		Medicine medicine = medicineRepository.findMedicineByName(name);
+	public void deleteMedicineById(int medicineId) {
+		Medicine medicine = medicineRepository.findByMedicineId(medicineId);
 		if(medicine != null) {
-			medicineRepository.deleteByName(name);
+			medicineRepository.delete(medicine);
 		}else {
 			throw new MedicineNotFoundException("Medicine not found");
 		}
 		
 	}
 
-	public Medicine UpdateMedicineById(int id, Medicine medicine) {
-		
-		Medicine medicineUpdate = medicineRepository.findMedicineById(id);
-		if(medicineUpdate != null) {
-			return medicineRepository.save(medicine);
-		}else {
-			throw new MedicineNotFoundException("medicine not found");
-		}
-		
+	@Override
+	public Medicine updateMedicine(Medicine medicine) {
+		Medicine updateMedicine = getMedicineById(medicine.getMedicineId());
+		updateMedicine = medicineRepository.save(medicine);
+		return updateMedicine;
 	}
 
+
+	
 }

@@ -12,13 +12,13 @@ public interface MedicineService {
 	
 	public Medicine getMedicineById(int id);
 	
-	public void deleteMedicine(String id);
-	
-	
-	
+
 	public Medicine getMedicineByName(String name);
 
-	Medicine UpdateMedicineById(int id, Medicine medicine);
+
+	public void deleteMedicineById(int medicineId);
+
+	Medicine updateMedicine(Medicine medicine);
 	
 	
 

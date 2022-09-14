@@ -2,6 +2,6 @@ package com.cg.oam.entity;
 
 public enum UserType {
 	
-	CUSTOMER,USER
+	CUSTOMER,ADMIN 
 
 }
