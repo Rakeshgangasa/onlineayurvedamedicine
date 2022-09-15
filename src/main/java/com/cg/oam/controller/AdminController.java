@@ -1,4 +1,4 @@
-package com.cg.oam.controller;
+/*package com.cg.oam.controller;
 
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class AdminController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		return ResponseEntity.of(Optional.of(medicine));
-	}
+	}*/
 	/*
 	 * @PostMapping( "/add-medicine") public ResponseEntity<Medicine>
 	 * addMedicine(@RequestBody Medicine medicine) {
@@ -64,4 +64,4 @@ public class AdminController {
 	 * ResponseEntity<>(updateMedicine, HttpStatus.OK); return responseEntity; }
 	 */
 
-}
+
