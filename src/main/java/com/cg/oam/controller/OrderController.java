@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.oam.entity.Order;
-
+import com.cg.oam.model.OrderRequestPayload;
 import com.cg.oam.service.OrderService;
 
 @RestController
@@ -31,6 +31,11 @@ public class OrderController {
 		List<Order> allOrderList = (List<Order>) orderService.getAllOrders();
 		return allOrderList;
 	}
+	@GetMapping("/getallorder/{customerId}")
+	public List<Order> getAllOrdersByCustomer() {
+		List<Order> allOrderList = (List<Order>) orderService.getAllOrders();
+		return allOrderList;
+	}
 
 	@GetMapping("/getorderbyid/{id}")
 	public ResponseEntity<Order> getOrderByid(@PathVariable("id") int id) {
@@ -42,8 +47,11 @@ public class OrderController {
 	}
 	
 	@PostMapping( "/addorder")
-	public ResponseEntity<Order> addOrder(@RequestBody Order order) {
-
+	public ResponseEntity<Order> addOrder(@RequestBody OrderRequestPayload orderRequestPayload ) {
+        int customerId=orderRequestPayload.getCustomerId();
+        List<Integer> medicineIds=orderRequestPayload.getMedicines();
+        Order order=new Order();
+        		
 		Order o = orderService.addOrder(order);
 		if (o != null) {
 			return new ResponseEntity<Order>(o, HttpStatus.CREATED);

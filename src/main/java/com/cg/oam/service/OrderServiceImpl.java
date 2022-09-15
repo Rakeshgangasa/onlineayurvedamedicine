@@ -1,19 +1,25 @@
 package com.cg.oam.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.oam.entity.Customer;
 import com.cg.oam.entity.Order;
 
 import com.cg.oam.exception.OrderNotFoundException;
+import com.cg.oam.repository.CustomerRepository;
 import com.cg.oam.repository.OrderRepository;
 @Service
 public class OrderServiceImpl implements OrderService{
 
 	@Autowired
 	OrderRepository orderRepository;
+
+	@Autowired
+	CustomerRepository  customerRepository; 
 	
 	@Override
 	public List<Order> getAllOrders() {
@@ -49,6 +55,17 @@ public class OrderServiceImpl implements OrderService{
 		Order updateOrder = getOrderById(order.getOrderId());
 		updateOrder = orderRepository.save(order);
 		return updateOrder;
+	}
+
+	@Override
+	public List<Order> getAllOrdersByCustomer(int customerId) {
+		Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+		if(optionalCustomer.isEmpty()) {
+			
+		}
+		Customer customer= optionalCustomer.get();
+		List<Order> orders =customer.getOrderList();
+		return orders;
 	}
 
 }

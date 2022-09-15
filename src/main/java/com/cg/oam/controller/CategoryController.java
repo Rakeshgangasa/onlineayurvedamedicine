@@ -1,5 +1,6 @@
 package com.cg.oam.controller;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -17,43 +18,31 @@ import com.cg.oam.entity.Category;
 import com.cg.oam.service.CategoryService;
 
 @RestController
+
 @RequestMapping("/category")
 public class CategoryController {
+
 	@Autowired
 	private CategoryService categoryService;
-	
-/********************************************************
-	 * Method: getAllCategory
-	 * Description: It is used to view all category in categories table
-	 
-	 
-********************************************************/
 
-	
+	/********************************************************
+	 * Method: getAllCategory Description: It is used to view all category in
+	 * categories table
+	 * 
+	 * 
+	 ********************************************************/
+
 	@GetMapping("/getAllCategory")
 	public List<Category> getAllCategory() {
 		List<Category> allCategoryList = (List<Category>) categoryService.getAllCategory();
 		return allCategoryList;
 	}
-	/********************************************************
-	 * Method: getCategoryById
-	 * Description: It is used to view category in categories table by id
-	 * *********************************************************/
 
-	@GetMapping("/getcategorybyid/{id}")
-	public ResponseEntity<Category> getCategoryById(@PathVariable(name = "id") int id) {
-
-		Category category = categoryService.getcategoryById(id);
-		if (category == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
-		return ResponseEntity.of(Optional.of(category));
-	}
 
 	/***************************************************************************************
-	 * Method: getCategoryByName 
-	
-****************************************************************************************/
+	 * Method: getCategoryByName
+	 * 
+	 ***************************************************************************************/
 
 	@GetMapping("/getcategorybyname/{name}")
 	public ResponseEntity<Category> getCategoryByName(@PathVariable(name = "name") String name) {
@@ -64,8 +53,7 @@ public class CategoryController {
 		}
 		return ResponseEntity.of(Optional.of(category));
 	}
-	
-	
+
 	@PostMapping(value = "/addCategory")
 	public ResponseEntity<Category> addCategory(@RequestBody Category category) {
 
@@ -76,4 +64,3 @@ public class CategoryController {
 		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
 	}
 }
-
