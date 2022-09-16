@@ -6,9 +6,12 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="order_tbl")
@@ -22,12 +25,12 @@ public class Order {
 	private LocalDate dispatchDate;
 	@Column(name="total_Cost")
 	private float totalCost;
-	@Column(name="medicine_List")
+	@Column(name="medicine_id")
 	@OneToMany
 	private List<Medicine> medicineList;
 	@ManyToOne
+	@JoinColumn(name="customer_Id")
 	private Customer customer;
-	
 	public int getOrderId() {
 		return orderId;
 	}
@@ -58,11 +61,19 @@ public class Order {
 	public void setMedicineList(List<Medicine> medicineList) {
 		this.medicineList = medicineList;
 	}
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 	@Override
 	public String toString() {
 		return "Order [orderId=" + orderId + ", orderDate=" + orderDate + ", dispatchDate=" + dispatchDate
-				+ ", totalCost=" + totalCost + ", medicineList=" + medicineList + "]";
+				+ ", totalCost=" + totalCost + ", medicineList=" + medicineList + ", customer=" + customer + "]";
 	}
+	
+	
 	
 	
 	

@@ -6,47 +6,109 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="User_tbl")
+@Table(name = "app_users")
 public class AppUser {
+
+	
 	@Id
-	@Column(name = "user_Id")
-	private int userId;
 	@Column(name = "user_name")
+	/*
+	 * @NotBlank
+	 * 
+	 * @Min(4)
+	 * 
+	 * @Max(32)
+	 */
 	private String userName;
-	@Column(name="password")
+
+	@Column(name = "password")
+	/*
+	 * @NotBlank
+	 * 
+	 * @Min(4)
+	 * 
+	 * @Max(32)
+	 * 
+	 * @Pattern(regexp =
+	 * "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
+	 */
 	private String password;
-	@Column(name = "user_type")
-	private String userType;
-	public int getUserId() {
-		return userId;
+
+	@Column(name = "role")
+	private String role;
+
+	public AppUser() {
+		super();
 	}
-	public void setUserId(int userId) {
-		this.userId = userId;
+
+	public AppUser(String userName, String password, String role) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.role = role;
 	}
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getUserType() {
-		return userType;
+
+	public String getRole() {
+		return role;
 	}
-	public void setUserType(String userType) {
-		this.userType = userType;
+
+	public void setRole(String role) {
+		this.role = role;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AppUser other = (AppUser) obj;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (!(role.equals(role)))
+			return false;
+		if (userName == null) {
+			if (other.userName != null)
+				return false;
+		} else if (!userName.equals(other.userName))
+			return false;
+		return true;
+	}
+
 	@Override
 	public String toString() {
-		return "AppUser [userId=" + userId + ", userName=" + userName + ", password=" + password + ", userType="
-				+ userType + "]";
+		return "AppUser [userName=" + userName + ", password=" + password + ", role=" + role + "]";
 	}
 	
-	
-
 }

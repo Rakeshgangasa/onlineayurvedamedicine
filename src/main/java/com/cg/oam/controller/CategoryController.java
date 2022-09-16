@@ -63,4 +63,12 @@ public class CategoryController {
 		}
 		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
 	}
+	/*
+	 * @GetMapping("/getcategorybyid/{id}") public ResponseEntity<Category>
+	 * getCategoryById(@PathVariable("id") int id) {
+	 * 
+	 * Category category = categoryService.getcategoryById(id); if (category ==
+	 * null) { return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); } return
+	 * ResponseEntity.of(Optional.of(category)); }
+	 */
 }

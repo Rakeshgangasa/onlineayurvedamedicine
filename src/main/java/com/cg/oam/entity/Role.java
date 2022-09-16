@@ -1,6 +1,6 @@
 package com.cg.oam.entity;
 
-public enum UserType {
+public enum Role {
 	
 	CUSTOMER,ADMIN 
 

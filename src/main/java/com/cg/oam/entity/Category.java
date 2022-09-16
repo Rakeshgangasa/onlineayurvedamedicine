@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="category_tbl")
 public class Category {
@@ -18,6 +20,7 @@ public class Category {
 	private String categoryName;
 	@Column(name = "medicine_List")
 	@OneToMany(mappedBy="category")
+	
 	private List<Medicine> medicineList;
 	
 	public String getCategoryId() {

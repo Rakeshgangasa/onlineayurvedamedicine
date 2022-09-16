@@ -57,15 +57,6 @@ public class OrderServiceImpl implements OrderService{
 		return updateOrder;
 	}
 
-	@Override
-	public List<Order> getAllOrdersByCustomer(int customerId) {
-		Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
-		if(optionalCustomer.isEmpty()) {
-			
-		}
-		Customer customer= optionalCustomer.get();
-		List<Order> orders =customer.getOrderList();
-		return orders;
-	}
+	
 
 }

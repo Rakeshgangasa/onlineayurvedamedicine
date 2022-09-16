@@ -17,5 +17,5 @@ public interface OrderService {
 
 	Order updateOrder(Order rder);
 	
-	public List<Order> getAllOrdersByCustomer(int customerId);
+	
 }

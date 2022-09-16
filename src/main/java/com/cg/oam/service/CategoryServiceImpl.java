@@ -75,7 +75,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public Category getCategoryByName(String name) {
 		Category cat = categoryRepository.findCategoryByCategoryName(name);
 		if (cat == null) {
-			String exceptionMessage = "Category does not exist in the database.";
+			String exceptionMessage = "Category does not exist .";
 			LOG.warn(exceptionMessage);
 			throw new CategoryNotFoundException(exceptionMessage);
 		} else {

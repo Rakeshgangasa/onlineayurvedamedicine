@@ -48,7 +48,7 @@ public class MedicineController {
 		}
 		return ResponseEntity.of(Optional.of(medicine));
 	}
-	@PostMapping( "/addmedicine")
+	@PostMapping( "/{categoryId}/add")
 	public ResponseEntity<Medicine> addMedicine(@RequestBody Medicine medicine) {
 
 	Medicine m = medicineService.addMedicine(medicine);
