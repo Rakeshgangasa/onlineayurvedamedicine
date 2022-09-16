@@ -10,14 +10,14 @@ import com.cg.oam.entity.Category;
 public interface CategoryRepository  extends JpaRepository<Category,String>{
 
 	Category findCategoryByCategoryName(String categoryName);
-	/*
-	 * Category save(Category category);
-	 * 
-	 * List<Category> findAll();
-	 * 
-	 * Category findCategoryByCategoryId(String id);
-	 * 
-	 * void deleteById(int id);
-	 */
+	
+	  Category save(Category category);
+	  
+	  List<Category> findAll();
+	  
+	  Category findCategoryByCategoryId(String id);
+	  
+	  void deleteById(String id);
+	 
 
 }

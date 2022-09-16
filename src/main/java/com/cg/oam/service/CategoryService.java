@@ -15,8 +15,10 @@ public interface CategoryService {
 	
 	Category getCategoryByName(String name);
 
-	void deleteCategory(int id);
+	
 
-	Category getcategoryById(int id);
+	void deleteCategory(String name);
+
+	Category getcategoryById(String id);
 
 }

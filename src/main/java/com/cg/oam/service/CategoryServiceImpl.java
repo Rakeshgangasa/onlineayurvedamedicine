@@ -47,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 	
 	@Override
-	public Category getcategoryById(int id) {
+	public Category getcategoryById(String id) {
 		Category cat = categoryRepository.findCategoryByCategoryId(id);
 		if (cat == null) {
 			String exceptionMessage = "Category does not exist in the database.";
@@ -60,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public void deleteCategory(int id) {
+	public void deleteCategory(String id) {
 		// TODO Auto-generated method stub
 		Category cat = categoryRepository.findCategoryByCategoryId(id);
 		if (cat != null) {
