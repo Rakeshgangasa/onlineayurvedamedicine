@@ -8,7 +8,8 @@ public interface MedicineService {
 	
 	public List<Medicine> getAllMedicines();
 	
-	public Medicine addMedicine(Medicine medicine);
+	
+	public Medicine addMedicine(String categoryId ,Medicine medicine);
 	
 	public Medicine getMedicineById(int id);
 	

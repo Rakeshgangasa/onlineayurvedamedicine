@@ -49,14 +49,12 @@ public class MedicineController {
 		return ResponseEntity.of(Optional.of(medicine));
 	}
 	@PostMapping( "/{categoryId}/add")
-	public ResponseEntity<Medicine> addMedicine(@RequestBody Medicine medicine) {
+	public ResponseEntity<Medicine> addMedicine(@PathVariable String categoryId ,@RequestBody Medicine medicine) {
 
-	Medicine m = medicineService.addMedicine(medicine);
-		if (m != null) {
-			return new ResponseEntity<Medicine>(m, HttpStatus.CREATED);
-
-		}
-		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+	Medicine m = medicineService.addMedicine(categoryId,medicine);
+	
+		return new ResponseEntity <>(m,HttpStatus.CREATED);
+		
 	}
 	
 	@DeleteMapping("/delete/{id}")
