@@ -1,10 +1,11 @@
 package com.cg.oam.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderRequestPayload {
 	 private int customerId;
-	 private List<Integer> medicines;
+	 private List<Integer> medicines= new ArrayList<>();
 	public int getCustomerId() {
 		return customerId;
 	}

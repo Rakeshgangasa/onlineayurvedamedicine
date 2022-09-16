@@ -1,5 +1,7 @@
 package com.cg.oam.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.oam.entity.Customer;
+import com.cg.oam.entity.Medicine;
 import com.cg.oam.entity.Order;
 import com.cg.oam.model.OrderRequestPayload;
+import com.cg.oam.service.CustomerService;
+import com.cg.oam.service.MedicineService;
 import com.cg.oam.service.OrderService;
 
 @RestController
@@ -25,6 +31,10 @@ public class OrderController {
 	
 	@Autowired
 	OrderService orderService;
+	@Autowired
+	CustomerService customerService;
+	@Autowired
+	MedicineService medicineService;
 	
 	@GetMapping("/getallorder")
 	public List<Order> getOrder() {
@@ -50,8 +60,24 @@ public class OrderController {
 	public ResponseEntity<Order> addOrder(@RequestBody OrderRequestPayload orderRequestPayload ) {
         int customerId=orderRequestPayload.getCustomerId();
         List<Integer> medicineIds=orderRequestPayload.getMedicines();
+        List<Medicine> medicineList= new ArrayList<>();
+       float totalAmount=0;
+        medicineIds.forEach(m->{
+        	Medicine medicine= medicineService.getMedicineById(m);
+        	medicineList.add(medicine);
+        	//totalAmount=totalAmount+medicine.getMedicineCost();
+        	
+        });
+        for(Medicine m:medicineList) {
+        	totalAmount=totalAmount+m.getMedicineCost();	
+        }
+        Customer customer= customerService.getCustomerById(customerId);
         Order order=new Order();
-        		
+        order.setCustomer(customer);
+        order.setMedicineList(medicineList);
+        order.setOrderDate(LocalDate.now());
+        order.setDispatchDate(LocalDate.now().plusDays(10));
+        order.setTotalCost(totalAmount);	
 		Order o = orderService.addOrder(order);
 		if (o != null) {
 			return new ResponseEntity<Order>(o, HttpStatus.CREATED);

@@ -5,18 +5,22 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="order_tbl")
 public class Order {
 	@Id
+	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="order_id")
 	private int orderId;
 	@Column(name="order_Date")
@@ -30,6 +34,7 @@ public class Order {
 	private List<Medicine> medicineList;
 	@ManyToOne
 	@JoinColumn(name="customer_Id")
+	@JsonIgnore
 	private Customer customer;
 	public int getOrderId() {
 		return orderId;
