@@ -55,8 +55,6 @@ public class MedicineServiceImpl implements MedicineService {
 			return  optionalMedicine.get();
 		}
 		
-		
-	
 	public Medicine getMedicineByName(String name) {
 		
 		Medicine medicine= medicineRepository.findByMedicineName(name);
