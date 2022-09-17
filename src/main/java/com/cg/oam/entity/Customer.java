@@ -2,6 +2,7 @@ package com.cg.oam.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class Customer {
     private String mobileNo;
     @Column(name = "address")
     private String address;
-    @OneToMany(mappedBy="customer")
+    @OneToMany(mappedBy="customer",cascade = CascadeType.ALL)
     private List<Order> orderList;
     
 	 

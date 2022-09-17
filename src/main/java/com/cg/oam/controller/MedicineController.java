@@ -47,24 +47,32 @@ public class MedicineController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		return ResponseEntity.of(Optional.of(medicine));
+		
 	}
+	
 	@PostMapping( "/{categoryId}/add")
-	public ResponseEntity<Medicine> addMedicine(@PathVariable String categoryId ,@RequestBody Medicine medicine) {
+	public ResponseEntity<Medicine> addMedicine(@PathVariable String categoryId ,@RequestBody Medicine medicineId) {
 
-	Medicine m = medicineService.addMedicine(categoryId,medicine);
+	Medicine m = medicineService.addMedicine(categoryId,medicineId);
 	
 		return new ResponseEntity <>(m,HttpStatus.CREATED);
 		
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteMedicineById(@PathVariable("id") int medicineId) {
-
-		ResponseEntity<Object> responseEntity = null;
-		medicineService.deleteMedicineById(medicineId);
-		responseEntity = new ResponseEntity<>("Medicine data deleted successfully", HttpStatus.OK);
+	public ResponseEntity<String> deleteProductById(@PathVariable("medicineId") int medicineId) {
+		
+			medicineService.deleteMedicine(medicineId);
+		    ResponseEntity<String> responseEntity = new ResponseEntity<>("medicine Deleted Successfully!!",HttpStatus.OK);
+		    return responseEntity;
+		}
+	@PostMapping("/medicine/save")
+	public ResponseEntity<Medicine> addProduct(@RequestBody Medicine medicine) {
+		Medicine newMedicine = medicineService.saveMedicine(medicine);
+		ResponseEntity<Medicine> responseEntity = new ResponseEntity<>(newMedicine,HttpStatus.CREATED);
 		return responseEntity;
 	}
+	
 	@PutMapping("/updatemedicine")
 	public ResponseEntity<?> updateMedicine(@RequestBody Medicine medicine) {
 

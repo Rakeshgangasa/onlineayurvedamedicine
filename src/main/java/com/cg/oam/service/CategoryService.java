@@ -21,4 +21,6 @@ public interface CategoryService {
 
 	Category getcategoryById(String id);
 
+	Category updateCategory(Category category);
+
 }

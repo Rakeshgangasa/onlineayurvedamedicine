@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.cg.oam.entity.Customer;
 import com.cg.oam.entity.Order;
-
+import com.cg.oam.exception.CustomerNotFoundException;
 import com.cg.oam.exception.OrderNotFoundException;
 import com.cg.oam.repository.CustomerRepository;
 import com.cg.oam.repository.OrderRepository;
@@ -29,32 +29,61 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	public Order addOrder(Order order) {
-		return orderRepository.save(order);
-	}
+		
+		Order newOrder = orderRepository.save(order);
+			return newOrder;
+		}
+	
 
 	@Override
 	public Order getOrderById(int id) {
-		// TODO Auto-generated method stub
-				return orderRepository.findById(id).get();
+       Optional<Order> optionalOrder = orderRepository.findById(id);
+		
+		if(optionalOrder.isEmpty()) {
+			throw new OrderNotFoundException("Order not exising with id: "+id);
+		}
+		
+		Order order = optionalOrder.get();
+		
+		return order;
 	}
+	
 
 	@Override
 	public void deleteOrderById(int orderId) {
-		Order order = orderRepository.findByOrderId(orderId);
-		if(order != null) {
-			orderRepository.delete(order);
-		}else {
-			throw new OrderNotFoundException("Order not found");
+     Optional<Order> optionalOrder = orderRepository.findById(orderId);
+		
+		if(optionalOrder.isEmpty()) {
+			throw new OrderNotFoundException("Order not exising with id: "+orderId);
 		}
+		
+		Order order = optionalOrder.get();
+		
+		orderRepository.delete(order);
 		
 	}
 		
 
 	@Override
 	public Order updateOrder(Order order) {
-		Order updateOrder = getOrderById(order.getOrderId());
-		updateOrder = orderRepository.save(order);
-		return updateOrder;
+     Optional<Order> optionalOrder= orderRepository.findById(order.getOrderId());
+		
+		if(optionalOrder.isEmpty()) {
+			throw new OrderNotFoundException("Order not exising with id: "+order.getOrderId());
+		}
+		
+		Order updatedOrder = orderRepository.save(order);
+		
+		return updatedOrder;
+	}
+
+	@Override
+	public Customer getOrderByCustomerId(int customerId) {
+		Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+		if (optionalCustomer.isEmpty())
+			throw new CustomerNotFoundException("Customer Not found with id : " + customerId);
+		Customer customer = optionalCustomer.get();;
+		return customer;
 	}
 
 	

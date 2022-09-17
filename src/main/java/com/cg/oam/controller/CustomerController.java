@@ -32,8 +32,8 @@ public class CustomerController {
 	}
 
 	@GetMapping("/getCustomerbyid/{id}")
-	public ResponseEntity<Customer> getCustomerByid(@PathVariable("id") int id) {
-		Customer customer = customerService.getCustomerById(id);
+	public ResponseEntity<Customer> getCustomerByid(@PathVariable("customerId") int customerId) {
+		Customer customer = customerService.getCustomerById(customerId);
 		if (customer == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
@@ -52,13 +52,12 @@ public class CustomerController {
 	@PostMapping("/addcustomer")
 	public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
 
-		Customer c = customerService.addCustomer(customer);
-		if (c != null) {
-			return new ResponseEntity<Customer>(c, HttpStatus.CREATED);
-
-		}
-		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+		ResponseEntity<Customer> responseEntity = null;
+		Customer saveCustomer = customerService.addCustomer(customer);
+		responseEntity = new ResponseEntity<>(saveCustomer, HttpStatus.CREATED);
+		return responseEntity;
 	}
+	
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteCustomerById(@PathVariable("id") int customerId) {

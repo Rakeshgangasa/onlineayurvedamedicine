@@ -1,6 +1,7 @@
 package com.cg.oam.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,6 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 
 	}
-
     public List<Category> getAllCategory() {
         List<Category> categoryList = categoryRepository.findAll();
         if (categoryList.isEmpty()) {
@@ -60,16 +60,16 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public void deleteCategory(String id) {
-		// TODO Auto-generated method stub
-		Category cat = categoryRepository.findCategoryByCategoryId(id);
-		if (cat != null) {
-			categoryRepository.deleteById(id);
-		} else {
-			throw new CategoryNotFoundException("Category not found");
+	public void deleteCategory(String categoryId) {
+		
+		Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
+		if(optionalCategory.isEmpty()) {
+			throw new CategoryNotFoundException("Category not existing with id : "+categoryId);
 		}
-
+		categoryRepository.deleteById(categoryId);
+		
 	}
+	
 	
 	@Override
 	public Category getCategoryByName(String name) {
@@ -84,9 +84,22 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 	}
 
-	
+
+
+	@Override
+	public Category updateCategory(Category category) {
+		
+			Optional<Category> optionalCategory = categoryRepository.findById(category.getCategoryId());
+			if(optionalCategory.isEmpty()) {
+				throw new CategoryNotFoundException("Category not existing with id: "+category.getCategoryId());
+			}
+			Category updatedCategory = categoryRepository.save(category);
+			return null;
+		
+	}
 
 	
+
 	
 
 }

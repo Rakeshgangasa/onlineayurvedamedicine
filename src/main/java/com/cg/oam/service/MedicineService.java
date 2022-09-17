@@ -9,7 +9,7 @@ public interface MedicineService {
 	public List<Medicine> getAllMedicines();
 	
 	
-	public Medicine addMedicine(String categoryId ,Medicine medicine);
+	
 	
 	public Medicine getMedicineById(int id);
 	
@@ -17,9 +17,18 @@ public interface MedicineService {
 	public Medicine getMedicineByName(String name);
 
 
-	public void deleteMedicineById(int medicineId);
+	
 
 	Medicine updateMedicine(Medicine medicine);
+
+
+	public void deleteMedicine(int medicineId);
+
+
+	public Medicine saveMedicine(Medicine medicine);
+
+
+	Medicine addMedicine(String categoryId, Medicine medicine);
 	
 	
 

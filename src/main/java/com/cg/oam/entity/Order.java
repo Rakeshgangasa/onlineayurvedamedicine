@@ -3,6 +3,7 @@ package com.cg.oam.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name="order_tbl")
 public class Order {
 	@Id
-	 @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="order_id")
 	private int orderId;
 	@Column(name="order_Date")
@@ -29,9 +30,8 @@ public class Order {
 	private LocalDate dispatchDate;
 	@Column(name="total_Cost")
 	private float totalCost;
-	@Column(name="medicine_id")
-	@OneToMany
-	private List<Medicine> medicineList;
+	@OneToMany(mappedBy="order",cascade = CascadeType.ALL)
+	private List<OrderItem> orderItems;
 	@ManyToOne
 	@JoinColumn(name="customer_Id")
 	@JsonIgnore
@@ -60,11 +60,12 @@ public class Order {
 	public void setTotalCost(float totalCost) {
 		this.totalCost = totalCost;
 	}
-	public List<Medicine> getMedicineList() {
-		return medicineList;
+	
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
 	}
-	public void setMedicineList(List<Medicine> medicineList) {
-		this.medicineList = medicineList;
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
 	}
 	public Customer getCustomer() {
 		return customer;
@@ -75,8 +76,9 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [orderId=" + orderId + ", orderDate=" + orderDate + ", dispatchDate=" + dispatchDate
-				+ ", totalCost=" + totalCost + ", medicineList=" + medicineList + ", customer=" + customer + "]";
+				+ ", totalCost=" + totalCost + ", orderItems=" + orderItems + ", customer=" + customer + "]";
 	}
+	
 	
 	
 	

@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name="medicine_tbl")
 public class Medicine {
 	@Id
-	   @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="medicine_id")
 	private int medicineId;
 	@Column(name="medicine_Name")

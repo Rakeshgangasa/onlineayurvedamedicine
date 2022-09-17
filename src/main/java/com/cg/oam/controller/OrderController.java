@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.oam.entity.Customer;
 import com.cg.oam.entity.Medicine;
 import com.cg.oam.entity.Order;
+import com.cg.oam.entity.OrderItem;
 import com.cg.oam.model.OrderRequestPayload;
 import com.cg.oam.service.CustomerService;
 import com.cg.oam.service.MedicineService;
@@ -41,10 +42,13 @@ public class OrderController {
 		List<Order> allOrderList = (List<Order>) orderService.getAllOrders();
 		return allOrderList;
 	}
-	@GetMapping("/getallorder/{customerId}")
-	public List<Order> getAllOrdersByCustomer() {
-		List<Order> allOrderList = (List<Order>) orderService.getAllOrders();
-		return allOrderList;
+	@GetMapping("/getallorderById/{customerId}")
+	public ResponseEntity<Customer> getOrderByCustomerId(@PathVariable("customerId") int customerId) {
+		Customer customer = orderService.getOrderByCustomerId(customerId);
+		if (customer == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		return ResponseEntity.of(Optional.of(customer));
 	}
 
 	@GetMapping("/getorderbyid/{id}")
@@ -60,21 +64,24 @@ public class OrderController {
 	public ResponseEntity<Order> addOrder(@RequestBody OrderRequestPayload orderRequestPayload ) {
         int customerId=orderRequestPayload.getCustomerId();
         List<Integer> medicineIds=orderRequestPayload.getMedicines();
-        List<Medicine> medicineList= new ArrayList<>();
+        List<OrderItem> orderItemList= new ArrayList<>();
+        Order order=new Order();
        float totalAmount=0;
         medicineIds.forEach(m->{
         	Medicine medicine= medicineService.getMedicineById(m);
-        	medicineList.add(medicine);
+        	OrderItem orderItem =new OrderItem();
+        	orderItem.setMedicine(medicine);
+            orderItem.setCost(medicine.getMedicineCost());
+            orderItem.setOrder(order);
+        	orderItemList.add(orderItem);
         	//totalAmount=totalAmount+medicine.getMedicineCost();
-        	
         });
-        for(Medicine m:medicineList) {
-        	totalAmount=totalAmount+m.getMedicineCost();	
+        for(OrderItem o:orderItemList) {
+        	totalAmount=totalAmount+o.getCost();	
         }
+        order.setOrderItems(orderItemList);
         Customer customer= customerService.getCustomerById(customerId);
-        Order order=new Order();
         order.setCustomer(customer);
-        order.setMedicineList(medicineList);
         order.setOrderDate(LocalDate.now());
         order.setDispatchDate(LocalDate.now().plusDays(10));
         order.setTotalCost(totalAmount);	

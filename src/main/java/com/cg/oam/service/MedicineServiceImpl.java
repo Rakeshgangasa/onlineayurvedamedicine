@@ -31,17 +31,18 @@ public class MedicineServiceImpl implements MedicineService {
 	}
 
 	@Override
-	public Medicine addMedicine(String categoryId ,Medicine medicine) {
-		Optional <Category> optionalCategory= categoryRepository.findById(categoryId);
+	public Medicine addMedicine(String categoryId, Medicine medicine) {
+		Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
 		if(optionalCategory.isEmpty()) {
-			throw new CategoryNotFoundException("category not exist with Id");
+			throw new CategoryNotFoundException("Category not existing with id : "+categoryId);
 		}
-		Category category=optionalCategory.get();
+		Category category = optionalCategory.get();
 		medicine.setCategory(category);
-		
-		return medicineRepository.save(medicine);
-		
+		Medicine newMedicine = medicineRepository.save(medicine);
+		return newMedicine;
 	}
+	
+	
 
 	public Medicine getMedicineById(int id) {
 		Optional <Medicine> optionalMedicine= medicineRepository.findById(id);
@@ -55,6 +56,10 @@ public class MedicineServiceImpl implements MedicineService {
 			return  optionalMedicine.get();
 		}
 		
+	public Medicine saveMedicine(Medicine medicine) {
+		Medicine newMedicine = medicineRepository.save(medicine);
+		return newMedicine;
+	}
 	public Medicine getMedicineByName(String name) {
 		
 		Medicine medicine= medicineRepository.findByMedicineName(name);
@@ -67,23 +72,31 @@ public class MedicineServiceImpl implements MedicineService {
 		
 	}
 
-	public void deleteMedicineById(int medicineId) {
-		Medicine medicine = medicineRepository.findByMedicineId(medicineId);
-		if(medicine != null) {
-			medicineRepository.delete(medicine);
-		}else {
-			throw new MedicineNotFoundException("Medicine not found");
+
+	public void deleteMedicine(int medicineId) {
+		Optional<Medicine> optionalMedicine = medicineRepository.findById(medicineId);
+		if(optionalMedicine.isEmpty()) {
+			throw new MedicineNotFoundException("medicine not existing with id: "+medicineId);
 		}
-		
+		medicineRepository.deleteById(medicineId);
 	}
 
 	@Override
 	public Medicine updateMedicine(Medicine medicine) {
-		Medicine updateMedicine = getMedicineById(medicine.getMedicineId());
-		updateMedicine = medicineRepository.save(medicine);
-		return updateMedicine;
+			Optional<Medicine> optionalMedicine = medicineRepository.findById(medicine.getMedicineId());
+			if(optionalMedicine.isEmpty()) {
+				throw new MedicineNotFoundException("No medicinewith this id:"+medicine.getMedicineId());
+			}
+			Medicine updatedMedicine = medicineRepository.save(medicine);
+			return updatedMedicine;
+		}
+
+	
+
+	
+
+	
 	}
 
 
 	
-}

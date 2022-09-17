@@ -54,7 +54,7 @@ public class AppUserController {
 	 * Description: It is used to login as a user or admin
 ******************************************************************************************************/	
 
-	@PostMapping("/signin")
+	@PostMapping("/signinCustomer")
 	public ResponseEntity<AppUser> signIn(@RequestBody AppUser appUser) {
 		LOG.info(appUser.toString());
 		HttpHeaders headers = new HttpHeaders();

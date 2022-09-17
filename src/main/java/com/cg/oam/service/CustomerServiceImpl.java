@@ -1,13 +1,15 @@
 package com.cg.oam.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.oam.entity.Customer;
-
+import com.cg.oam.entity.Medicine;
 import com.cg.oam.exception.CustomerNotFoundException;
+import com.cg.oam.exception.MedicineNotFoundException;
 import com.cg.oam.repository.CustomerRepository;
 
 @Service
@@ -24,40 +26,51 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer addCustomer(Customer customer) {
-		// TODO Auto-generated method stub
+		Customer newCustomer = customerRepository.save(customer);
+			return newCustomer;
+		}
 
-		return customerRepository.save(customer);
+	
 
+	public Customer getCustomerById(int customerId) {
+		Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+		if (optionalCustomer.isEmpty())
+			throw new CustomerNotFoundException("Customer Not found with id : " + customerId);
+		Customer customer = optionalCustomer.get();
+		return customer;
 	}
-
-	public Customer getCustomerById(int id) {
-		// TODO Auto-generated method stub
-		return customerRepository.findById(id).get();
-
-	}
+	
 
 	public Customer getCustomerByName(String name) {
-		// TODO Auto-generated method stub
-		return customerRepository.findByCustomerName(name);
-
+		
+		Optional<Customer> optionalCustomer = Optional.ofNullable(customerRepository.findByCustomerName(name));
+		if (optionalCustomer.isEmpty())
+			throw new CustomerNotFoundException("Customer Not found with Name : " + name);
+		Customer customer = optionalCustomer.get();
+		return customer;
 	}
 
+
 	public void deleteCustomerById(int customerId) {
-		Customer customer = customerRepository.findByCustomerId(customerId);
-		if (customer != null) {
-			customerRepository.delete(customer);
-		} else {
-			throw new CustomerNotFoundException("Customer not found");
+		Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+		if(optionalCustomer.isEmpty()) {
+			throw new CustomerNotFoundException("Customer not existing with id: "+customerId);
 		}
+		customerRepository.deleteById(customerId);
 
 	}
 
 	@Override
 	public Customer updateCustomer(Customer customer) {
-		Customer updateCustomer = getCustomerById(customer.getCustomerId());
-		updateCustomer = customerRepository.save(customer);
-		return updateCustomer;
+		Optional<Customer> optionalCustomer = customerRepository.findById(customer.getCustomerId());
+		if(optionalCustomer.isEmpty()) {
+			throw new CustomerNotFoundException("No Customer with this id:"+customer.getCustomerId());
+		}
+		Customer updatedCustomer= customerRepository.save(customer);
+		return updatedCustomer;
 	}
+	}
+	
     
- }
+
 

@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,6 +55,7 @@ public class CategoryController {
 		return ResponseEntity.of(Optional.of(category));
 	}
 
+	
 	@PostMapping(value = "/addCategory")
 	public ResponseEntity<Category> addCategory(@RequestBody Category category) {
 
@@ -63,12 +65,12 @@ public class CategoryController {
 		}
 		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
 	}
-	/*
-	 * @GetMapping("/getcategorybyid/{id}") public ResponseEntity<Category>
-	 * getCategoryById(@PathVariable("id") int id) {
-	 * 
-	 * Category category = categoryService.getcategoryById(id); if (category ==
-	 * null) { return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); } return
-	 * ResponseEntity.of(Optional.of(category)); }
-	 */
+	
+	@DeleteMapping("/category/{cId}")
+	public ResponseEntity<String> deleteCategoryById(@PathVariable("cId") String categoryId) {
+		categoryService.deleteCategory (categoryId);
+	    ResponseEntity<String> responseEntity = new ResponseEntity<>("Category Deleted successfully.",HttpStatus.OK);
+	    return responseEntity;
+	}
+	
 }
