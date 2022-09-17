@@ -66,6 +66,8 @@ public class CategoryController {
 		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
 	}
 	
+	
+	
 	@DeleteMapping("/category/{cId}")
 	public ResponseEntity<String> deleteCategoryById(@PathVariable("cId") String categoryId) {
 		categoryService.deleteCategory (categoryId);

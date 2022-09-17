@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,49 +28,35 @@ public class AppUserController {
 	@Autowired
 	AppUserService appUserService;
 
-/*****************************************************************************************************
-	 * Get Method: get-all-users 
-	 * Description: It is used to view all users from app_users table
-******************************************************************************************************/
-
-	@GetMapping("/getallusers")
+	@GetMapping("/get-all-users")
 	public ResponseEntity<List<AppUser>> getAllAppUsers() {
 		LOG.info("get-all-appUsers");
 		return new ResponseEntity<List<AppUser>>(appUserService.getAllUsers(), HttpStatus.OK);
 	}
-	
-/*****************************************************************************************************
-	 * Post Method: sign-up
-	 * Description: It is used to register a user or admin
-******************************************************************************************************/
-	
-	@PostMapping("/signup")
-	public ResponseEntity<AppUser> signUp(@RequestBody AppUser appUser) {
-		LOG.info(appUser.toString());
-		return new ResponseEntity<AppUser>(appUserService.signUpUser(appUser), HttpStatus.CREATED);
-	}
-	
-/*****************************************************************************************************
-	 * Post Method: sign-in
-	 * Description: It is used to login as a user or admin
-******************************************************************************************************/	
 
-	@PostMapping("/signinCustomer")
-	public ResponseEntity<AppUser> signIn(@RequestBody AppUser appUser) {
+	@PostMapping("/register")
+	public ResponseEntity<AppUser> register(@RequestBody AppUser appUser) {
+		LOG.info(appUser.toString());
+		return new ResponseEntity<AppUser>(appUserService.registerUser(appUser), HttpStatus.CREATED);
+	}
+
+	@PostMapping("/login")
+	public ResponseEntity<AppUser> login(@RequestBody AppUser appUser) {
 		LOG.info(appUser.toString());
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("message", "User " + appUser.getUserName() + " signed in successfully.");
-		return new ResponseEntity<AppUser>(appUserService.signInUser(appUser), headers, HttpStatus.OK);
+		headers.add("message", "User " + appUser.getUserName() + " logged in successfully.");
+		return new ResponseEntity<AppUser>(appUserService.loginUser(appUser), headers, HttpStatus.OK);
 	}
 
-/*****************************************************************************************************
-	 * Put Method: update-user
-	 * Description: It is used to update the information
-******************************************************************************************************/	
+	@GetMapping("/logout/{user}")
+	public ResponseEntity<String> logout(@PathVariable(name = "user") String userName) {
+//		LOG.info(userName);
+		return new ResponseEntity<String>(appUserService.logoutUser(userName), HttpStatus.OK);
+	}
 
-	@PutMapping("/updateuser")
+	@PutMapping("/update-user")
 	public ResponseEntity<AppUser> updateAppUser(@RequestBody AppUser appUser) {
 		LOG.info(appUser.toString());
 		return new ResponseEntity<AppUser>(appUserService.updateUser(appUser), HttpStatus.OK);
 	}
-}	
+}

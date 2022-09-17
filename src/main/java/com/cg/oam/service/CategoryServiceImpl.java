@@ -47,17 +47,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 	
 	@Override
-	public Category getcategoryById(String id) {
-		Category cat = categoryRepository.findCategoryByCategoryId(id);
-		if (cat == null) {
-			String exceptionMessage = "Category does not exist in the database.";
-			LOG.warn(exceptionMessage);
-			throw new CategoryNotFoundException(exceptionMessage);
-		} else {
-			LOG.info("List returned successfully.");
-			return cat;
+	public Category getcategoryById(String categoryId) {
+		Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
+		if(optionalCategory.isEmpty()) {
+			throw new CategoryNotFoundException("category not existing with id: "+categoryId);
 		}
+		Category category = optionalCategory.get();
+		return category;
 	}
+	
 
 	@Override
 	public void deleteCategory(String categoryId) {
@@ -86,17 +84,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 
 
-	@Override
-	public Category updateCategory(Category category) {
-		
-			Optional<Category> optionalCategory = categoryRepository.findById(category.getCategoryId());
-			if(optionalCategory.isEmpty()) {
-				throw new CategoryNotFoundException("Category not existing with id: "+category.getCategoryId());
-			}
-			Category updatedCategory = categoryRepository.save(category);
-			return null;
-		
-	}
+	
 
 	
 

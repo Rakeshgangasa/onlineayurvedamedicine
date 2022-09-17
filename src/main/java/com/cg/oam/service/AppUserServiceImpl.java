@@ -16,70 +16,82 @@ import com.cg.oam.repository.AppUserRepository;
 @Service
 public class AppUserServiceImpl implements AppUserService {
 
-	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
+		private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-	@Autowired
-	private AppUserRepository appUserRepository;
+		@Autowired
+		private AppUserRepository appUserRepository;
 
-	AppUser signedInUser;
+		AppUser loggedInUser;
 
-	@Override
-	public List<AppUser> getAllUsers() {
-		List<AppUser> userList = appUserRepository.findAll();
-		if (userList.isEmpty()) {
-			String exceptionMessage = "AppUsers don't exist in the database.";
-			LOG.warn(exceptionMessage);
-			throw new AppUserNotFoundException(exceptionMessage);
-		} else {
-			LOG.info("List returned successfully.");
-			return userList;
-		}
-	}
-
-	@Override
-	public AppUser signUpUser(AppUser appUser) {
-		LOG.info(appUser.toString());
-		Optional<AppUser> userOptional = appUserRepository.findById(appUser.getUserName());
-		if (userOptional.isEmpty()) {
-			return appUserRepository.save(appUser);
-		} else {
-			String exceptionMessage = "User with userName " + appUser.getUserName() + " already exists.";
-			throw new AppUserAlreadyExistsException(exceptionMessage);
-		}
-	}
-
-	@Override
-	public AppUser signInUser(AppUser appUser) {
-		LOG.info(appUser.toString());
-		Optional<AppUser> userOptional = appUserRepository.findById(appUser.getUserName());
-		if (userOptional.isPresent()) {
-			if (appUser.equals(userOptional.get())) {
-				LOG.info(userOptional.get().toString());
-				signedInUser = appUser;
-				return appUser;
+		@Override
+		public List<AppUser> getAllUsers() {
+			List<AppUser> userList = appUserRepository.findAll();
+			if (userList.isEmpty()) {
+				String exceptionMessage = "AppUsers don't exist in the database.";
+				LOG.warn(exceptionMessage);
+				throw new AppUserNotFoundException(exceptionMessage);
 			} else {
-				String exceptionMessage = "Wrong password!";
+				LOG.info("depList returned successfully.");
+				return userList;
+			}
+		}
+
+		@Override
+		public AppUser registerUser(AppUser appUser) {
+			LOG.info(appUser.toString());
+			Optional<AppUser> userOptional = appUserRepository.findById(appUser.getUserName());
+			if (userOptional.isEmpty()) {
+				return appUserRepository.save(appUser);
+			} else {
+				String exceptionMessage = "User with userName " + appUser.getUserName() + " already exists.";
+				throw new AppUserAlreadyExistsException(exceptionMessage);
+			}
+		}
+
+		@Override
+		public AppUser loginUser(AppUser appUser) {
+			LOG.info(appUser.toString());
+			Optional<AppUser> userOptional = appUserRepository.findById(appUser.getUserName());
+			if (userOptional.isPresent()) {
+				if (appUser.equals(userOptional.get())) {
+					LOG.info(userOptional.get().toString());
+					loggedInUser = appUser; // successful login
+					return appUser;
+				} else {
+					String exceptionMessage = "Wrong password!";
+					LOG.warn(exceptionMessage);
+					throw new AppUserNotFoundException(exceptionMessage);
+				}
+			} else {
+				String exceptionMessage = "Wrong userName!";
 				LOG.warn(exceptionMessage);
 				throw new AppUserNotFoundException(exceptionMessage);
 			}
-		} else {
-			String exceptionMessage = "Wrong userName!";
-			LOG.warn(exceptionMessage);
-			throw new AppUserNotFoundException(exceptionMessage);
+		}
+
+		@Override
+		public String logoutUser(String userName) {
+			if (loggedInUser.getUserName().equals(userName)) {
+				LOG.info(userName + " logged out successfully.");
+				loggedInUser = null;
+				return userName;
+			} else {
+				String exceptionMessage = "User with userName " + userName + " is not logged in.";
+				LOG.warn(exceptionMessage);
+				throw new AppUserNotFoundException(exceptionMessage);
+			}
+		}
+
+		@Override
+		public AppUser updateUser(AppUser appUser) {
+			Optional<AppUser> userOptional = appUserRepository.findById(appUser.getUserName());
+			if (userOptional.isPresent()) {
+				LOG.info(userOptional.get().toString());
+				return appUserRepository.save(appUser);
+			} else {
+				String exceptionMessage = "AppUser with userName " + appUser.getUserName() + " not found!";
+				LOG.warn(exceptionMessage);
+				throw new AppUserNotFoundException(exceptionMessage);
+			}
 		}
 	}
-
-	@Override
-	public AppUser updateUser(AppUser appUser) {
-		Optional<AppUser> userOptional = appUserRepository.findById(appUser.getUserName());
-		if (userOptional.isPresent()) {
-			LOG.info(userOptional.get().toString());
-			return appUserRepository.save(appUser);
-		} else {
-			String exceptionMessage = "AppUser with userName " + appUser.getUserName() + " not found!";
-			LOG.warn(exceptionMessage);
-			throw new AppUserNotFoundException(exceptionMessage);
-		}
-	}
-
-}

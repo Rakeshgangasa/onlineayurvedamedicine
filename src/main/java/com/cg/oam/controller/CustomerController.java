@@ -31,13 +31,17 @@ public class CustomerController {
 		return allCustomerList;
 	}
 
-	@GetMapping("/getCustomerbyid/{id}")
-	public ResponseEntity<Customer> getCustomerByid(@PathVariable("customerId") int customerId) {
+	@GetMapping("/getCustomerbyid/{customerId}")
+	public ResponseEntity<Object> fetchProductById(@PathVariable("customerId") int customerId) {
+		//try {
 		Customer customer = customerService.getCustomerById(customerId);
-		if (customer == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
-		return ResponseEntity.of(Optional.of(customer));
+		ResponseEntity<Object> responseEntity = new ResponseEntity<>(customer, HttpStatus.OK);
+		return responseEntity;
+		//}
+	/*	catch(ProductNotFoundException e) {
+			ResponseEntity<Object> responseEntity = new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+			return responseEntity;
+		}*/
 	}
 
 	@GetMapping("/getcustomerbyname/{name}")

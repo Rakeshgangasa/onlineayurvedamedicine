@@ -2,6 +2,9 @@ package com.cg.oam.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -90,24 +93,24 @@ public class CustomerServiceTest {
 		assertEquals(3, customers.size());
 	}
 
-	/*
-	 * @Test public void testDeleteCustomer() {
-	 * 
-	 * Customer customer = new Customer(); customer.setCustomerId(111);
-	 * customer.setCustomerName("Farru"); customer.setEmail("farru@gmail.com");
-	 * customer.setMobileNo("5678904321"); customer.setAddress("Karnataka");
-	 * 
-	 * Optional<Customer> optionalCustomer = Optional.of(customer);
-	 * 
-	 * when(customerRepository.findById(111)).thenReturn(optionalCustomer);
-	 * 
-	 * doNothing().when(customerRepository).deleteById(111);
-	 * 
-	 * customerServiceImpl.deleteCustomerById(111);
-	 * 
-	 * verify(customerRepository, times(1)).findById(111);
-	 * verify(customerRepository, times(1)).deleteById(111); }
-	 */
+	
+	  @Test public void testDeleteCustomer() {
+	  
+	  Customer customer = new Customer(); customer.setCustomerId(111);
+	  customer.setCustomerName("Farru"); customer.setEmail("farru@gmail.com");
+	  customer.setMobileNo("5678904321"); customer.setAddress("Karnataka");
+	  
+	  Optional<Customer> optionalCustomer = Optional.of(customer);
+	  
+	  when(customerRepository.findById(111)).thenReturn(optionalCustomer);
+	  
+	  doNothing().when(customerRepository).deleteById(111);
+	  
+	  customerServiceImpl.deleteCustomerById(111);
+	  
+	  verify(customerRepository, times(1)).findById(111);
+	  verify(customerRepository, times(1)).deleteById(111); }
+	 
 
 }
 

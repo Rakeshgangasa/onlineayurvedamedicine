@@ -6,12 +6,15 @@ import com.cg.oam.entity.AppUser;
 
 public interface AppUserService {
 
-	List<AppUser> getAllUsers();
+		public abstract List<AppUser> getAllUsers();
 
-	AppUser signUpUser(AppUser appUser);
+		public abstract AppUser registerUser(AppUser appUser);
 
-	AppUser signInUser(AppUser appUser);
+		public abstract AppUser loginUser(AppUser appUser);
 
-	AppUser updateUser(AppUser appUser);
+		public abstract String logoutUser(String userName);
 
-}
+		public abstract AppUser updateUser(AppUser appUser);
+
+	}
+
