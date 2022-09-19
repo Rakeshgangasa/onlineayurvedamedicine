@@ -51,9 +51,9 @@ public class OrderController {
 		return ResponseEntity.of(Optional.of(customer));
 	}
 
-	@GetMapping("/getorderbyid/{id}")
-	public ResponseEntity<Order> getOrderByid(@PathVariable("id") int id) {
-		Order order = orderService.getOrderById(id);
+	@GetMapping("/getorderbyid/{orderId}")
+	public ResponseEntity<Order> getOrderByid(@PathVariable("orderId") int orderId) {
+		Order order = orderService.getOrderById(orderId);
 		if (order == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
@@ -93,8 +93,8 @@ public class OrderController {
 		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
 	}
 	
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteOrderById(@PathVariable("id") int orderId) {
+	@DeleteMapping("/delete/{orderId}")
+	public ResponseEntity<?> deleteOrderById(@PathVariable("orderId") int orderId) {
 
 		ResponseEntity<Object> responseEntity = null;
 		orderService.deleteOrderById(orderId);

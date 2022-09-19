@@ -33,20 +33,17 @@ public class CustomerController {
 
 	@GetMapping("/getCustomerbyid/{customerId}")
 	public ResponseEntity<Object> fetchProductById(@PathVariable("customerId") int customerId) {
-		//try {
+		
 		Customer customer = customerService.getCustomerById(customerId);
 		ResponseEntity<Object> responseEntity = new ResponseEntity<>(customer, HttpStatus.OK);
 		return responseEntity;
-		//}
-	/*	catch(ProductNotFoundException e) {
-			ResponseEntity<Object> responseEntity = new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
-			return responseEntity;
-		}*/
+	
+	
 	}
 
-	@GetMapping("/getcustomerbyname/{name}")
-	public ResponseEntity<Customer> getCustomerByName(@PathVariable("name") String name) {
-		Customer customer = customerService.getCustomerByName(name);
+	@GetMapping("/getcustomerbyname/{customerName}")
+	public ResponseEntity<Customer> getCustomerByName(@PathVariable("customerName") String customerName) {
+		Customer customer = customerService.getCustomerByName(customerName);
 		if (customer == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
@@ -63,8 +60,8 @@ public class CustomerController {
 	}
 	
 
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> deleteCustomerById(@PathVariable("id") int customerId) {
+	@DeleteMapping("/delete/{customerId}")
+	public ResponseEntity<?> deleteCustomerById(@PathVariable("customerId") int customerId) {
 
 		ResponseEntity<Object> responseEntity = null;
 		customerService.deleteCustomerById(customerId);

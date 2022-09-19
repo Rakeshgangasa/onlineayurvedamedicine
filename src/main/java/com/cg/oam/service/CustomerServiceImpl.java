@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.oam.entity.Customer;
-import com.cg.oam.entity.Medicine;
+
 import com.cg.oam.exception.CustomerNotFoundException;
-import com.cg.oam.exception.MedicineNotFoundException;
+
 import com.cg.oam.repository.CustomerRepository;
 
 @Service
@@ -41,11 +41,11 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 
-	public Customer getCustomerByName(String name) {
+	public Customer getCustomerByName(String customerName) {
 		
-		Optional<Customer> optionalCustomer = Optional.ofNullable(customerRepository.findByCustomerName(name));
+		Optional<Customer> optionalCustomer = Optional.ofNullable(customerRepository.findByCustomerName(customerName));
 		if (optionalCustomer.isEmpty())
-			throw new CustomerNotFoundException("Customer Not found with Name : " + name);
+			throw new CustomerNotFoundException("Customer Not found with Name : " + customerName);
 		Customer customer = optionalCustomer.get();
 		return customer;
 	}

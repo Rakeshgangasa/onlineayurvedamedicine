@@ -1,6 +1,7 @@
 package com.cg.oam.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,9 +16,8 @@ public interface CategoryRepository  extends JpaRepository<Category,String>{
 	  
 	  List<Category> findAll();
 	  
-	  Category findCategoryByCategoryId(String id);
+	  Category findCategoryByCategoryId(String categoryId);
 	  
-	  void deleteById(String id);
-	 
+	  void deleteById(String categoryId);
 
 }

@@ -26,12 +26,12 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 
-	/********************************************************
+	/********************
 	 * Method: getAllCategory Description: It is used to view all category in
 	 * categories table
 	 * 
 	 * 
-	 ********************************************************/
+	 ********************/
 
 	@GetMapping("/getAllCategory")
 	public List<Category> getAllCategory() {
@@ -40,15 +40,15 @@ public class CategoryController {
 	}
 
 
-	/***************************************************************************************
+	/*****************************
 	 * Method: getCategoryByName
 	 * 
-	 ***************************************************************************************/
+	 *****************************/
 
-	@GetMapping("/getcategorybyname/{name}")
-	public ResponseEntity<Category> getCategoryByName(@PathVariable(name = "name") String name) {
+	@GetMapping("/getcategorybyname/{categoryName}")
+	public ResponseEntity<Category> getCategoryByName(@PathVariable(name = "categoryName") String categoryName) {
 
-		Category category = categoryService.getCategoryByName(name);
+		Category category = categoryService.getCategoryByName(categoryName);
 		if (category == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
@@ -68,8 +68,8 @@ public class CategoryController {
 	
 	
 	
-	@DeleteMapping("/category/{cId}")
-	public ResponseEntity<String> deleteCategoryById(@PathVariable("cId") String categoryId) {
+	@DeleteMapping("/category/{categoryId}")
+	public ResponseEntity<String> deleteCategoryById(@PathVariable("categoryId") String categoryId) {
 		categoryService.deleteCategory (categoryId);
 	    ResponseEntity<String> responseEntity = new ResponseEntity<>("Category Deleted successfully.",HttpStatus.OK);
 	    return responseEntity;

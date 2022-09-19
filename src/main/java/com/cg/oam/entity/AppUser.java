@@ -10,10 +10,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "app_users")
 public class AppUser {
-
-	
 	@Id
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_Id")
+	private int userId;
 	@Column(name = "user_name")
 	/*
 	 * @NotBlank

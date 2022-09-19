@@ -23,15 +23,13 @@ public class OrderServiceImpl implements OrderService{
 	
 	@Override
 	public List<Order> getAllOrders() {
-		List<Order> orders = orderRepository.findAll();
-		return orders;
+		return orderRepository.findAll();
 	}
 
 	@Override
 	public Order addOrder(Order order) {
 		
-		Order newOrder = orderRepository.save(order);
-			return newOrder;
+		return orderRepository.save(order);
 		}
 	
 
@@ -43,9 +41,7 @@ public class OrderServiceImpl implements OrderService{
 			throw new OrderNotFoundException("Order not exising with id: "+id);
 		}
 		
-		Order order = optionalOrder.get();
-		
-		return order;
+		return optionalOrder.get();
 	}
 	
 
@@ -72,9 +68,7 @@ public class OrderServiceImpl implements OrderService{
 			throw new OrderNotFoundException("Order not exising with id: "+order.getOrderId());
 		}
 		
-		Order updatedOrder = orderRepository.save(order);
-		
-		return updatedOrder;
+		return orderRepository.save(order);
 	}
 
 	@Override

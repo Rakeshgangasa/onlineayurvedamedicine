@@ -2,9 +2,7 @@ package com.cg.oam.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+
 import static org.mockito.Mockito.when;
  
 import java.time.LocalDate;
@@ -22,7 +20,7 @@ import com.cg.oam.exception.OrderNotFoundException;
 import com.cg.oam.repository.OrderRepository;
  
 @SpringBootTest
-public class OrderServiceTest {
+     class OrderServiceTest {
 
     @InjectMocks
     OrderServiceImpl orderServiceImpl = new OrderServiceImpl();
@@ -31,7 +29,7 @@ public class OrderServiceTest {
     OrderRepository orderRepository;    
 
     @Test
-    public void testGetOrderById() {
+    void testGetOrderById() {
 
         Order order = new Order();
         order.setOrderId(121);
@@ -51,7 +49,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void testGetOrderByIdException() {
+     void testGetOrderByIdException() {
 
         when(orderRepository.findById(121)).thenThrow(OrderNotFoundException.class);
 
@@ -59,7 +57,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void testGetAllOrders() {
+     void testGetAllOrders() {
 
     	Order order = new Order();
         order.setOrderId(121);

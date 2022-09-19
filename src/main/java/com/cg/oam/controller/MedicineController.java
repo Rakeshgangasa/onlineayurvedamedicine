@@ -31,18 +31,18 @@ public class MedicineController {
 		return allMedicineList;
 	}
 
-	@GetMapping("/getmedicinebyid/{id}")
-	public ResponseEntity<Medicine> getMedicineByid(@PathVariable("id") int id) {
-		Medicine medicine = medicineService.getMedicineById(id);
+	@GetMapping("/getmedicinebyid/{medicineId}")
+	public ResponseEntity<Medicine> getMedicineByid(@PathVariable("MedicineId") int medicineId) {
+		Medicine medicine = medicineService.getMedicineById(medicineId);
 		if (medicine == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		return ResponseEntity.of(Optional.of(medicine));
 	}
 	
-	@GetMapping("/getmedicinebyname/{name}")
-	public ResponseEntity<Medicine> getMedicineByName(@PathVariable("name") String name) {
-		Medicine medicine = medicineService.getMedicineByName(name);
+	@GetMapping("/getmedicinebyname/{medicineName}")
+	public ResponseEntity<Medicine> getMedicineByName(@PathVariable("medicineName") String medicineName) {
+		Medicine medicine = medicineService.getMedicineByName(medicineName);
 		if (medicine == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
@@ -59,7 +59,7 @@ public class MedicineController {
 		
 	}
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/delete/{medicineId}")
 	public ResponseEntity<String> deleteProductById(@PathVariable("medicineId") int medicineId) {
 		
 			medicineService.deleteMedicine(medicineId);

@@ -31,7 +31,7 @@ public class AppUserController {
 	@GetMapping("/get-all-users")
 	public ResponseEntity<List<AppUser>> getAllAppUsers() {
 		LOG.info("get-all-appUsers");
-		return new ResponseEntity<List<AppUser>>(appUserService.getAllUsers(), HttpStatus.OK);
+		return new ResponseEntity<>(appUserService.getAllUsers(), HttpStatus.OK);
 	}
 
 	@PostMapping("/register")
@@ -45,13 +45,13 @@ public class AppUserController {
 		LOG.info(appUser.toString());
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("message", "User " + appUser.getUserName() + " logged in successfully.");
-		return new ResponseEntity<AppUser>(appUserService.loginUser(appUser), headers, HttpStatus.OK);
+		return new ResponseEntity<>(appUserService.loginUser(appUser), headers, HttpStatus.OK);
 	}
 
 	@GetMapping("/logout/{user}")
 	public ResponseEntity<String> logout(@PathVariable(name = "user") String userName) {
 //		LOG.info(userName);
-		return new ResponseEntity<String>(appUserService.logoutUser(userName), HttpStatus.OK);
+		return new ResponseEntity<>(appUserService.logoutUser(userName), HttpStatus.OK);
 	}
 
 	@PutMapping("/update-user")

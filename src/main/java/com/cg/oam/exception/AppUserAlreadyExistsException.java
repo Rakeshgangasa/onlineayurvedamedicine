@@ -1,7 +1,7 @@
 package com.cg.oam.exception;
 
 
-import org.springframework.web.bind.annotation.ResponseStatus;
+
 
 public class AppUserAlreadyExistsException extends RuntimeException {
 

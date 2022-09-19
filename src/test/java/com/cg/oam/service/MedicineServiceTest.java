@@ -22,7 +22,7 @@ import com.cg.oam.exception.MedicineNotFoundException;
 import com.cg.oam.repository.MedicineRepository;
 
 @SpringBootTest
-public class MedicineServiceTest {
+ class MedicineServiceTest {
 
 	@InjectMocks
 	MedicineServiceImpl medicineServiceImpl = new MedicineServiceImpl();
@@ -31,7 +31,7 @@ public class MedicineServiceTest {
 	MedicineRepository medicineRepository;
 
 	@Test
-	public void testGetMedicineById() {
+	 void testGetMedicineById() {
 
 		Medicine medicine = new Medicine();
 		medicine.setMedicineId(101);
@@ -51,7 +51,7 @@ public class MedicineServiceTest {
 	}
 
 	@Test
-	public void testGetMedicineByIdException() {
+	 void testGetMedicineByIdException() {
 
 		when(medicineRepository.findById(1020)).thenThrow(MedicineNotFoundException.class);
 
@@ -59,7 +59,7 @@ public class MedicineServiceTest {
 	}
 
 	@Test
-	public void testGetAllMedicines() {
+	 void testGetAllMedicines() {
 
 		Medicine medicine = new Medicine();
 		medicine.setMedicineId(101);
@@ -95,7 +95,7 @@ public class MedicineServiceTest {
 	}
 
 	@Test
-	public void testDeleteMedicine() {
+	 void testDeleteMedicine() {
 
 		Medicine medicine = new Medicine();
 		medicine.setMedicineId(101);

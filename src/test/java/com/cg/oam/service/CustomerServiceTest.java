@@ -21,7 +21,7 @@ import com.cg.oam.exception.CustomerNotFoundException;
 import com.cg.oam.repository.CustomerRepository;
 
 @SpringBootTest
-public class CustomerServiceTest {
+       class CustomerServiceTest {
 
 	@InjectMocks
 	CustomerServiceImpl customerServiceImpl = new CustomerServiceImpl();
@@ -30,7 +30,7 @@ public class CustomerServiceTest {
 	CustomerRepository customerRepository;
 
 	@Test
-	public void testGetCustomerById() {
+	 void testGetCustomerById() {
 
 		Customer customer = new Customer();
 		customer.setCustomerId(111); 
@@ -50,7 +50,7 @@ public class CustomerServiceTest {
 	}
 
 	@Test
-	public void testGetCustomerByIdException() {
+	 void testGetCustomerByIdException() {
 
 		when(customerRepository.findById(111)).thenThrow(CustomerNotFoundException.class);
 
@@ -58,7 +58,7 @@ public class CustomerServiceTest {
 	}
 
 	@Test
-	public void testGetAllCustomers() {
+	 void testGetAllCustomers() {
 
 		Customer customer = new Customer();
 		customer.setCustomerId(111);
@@ -94,7 +94,8 @@ public class CustomerServiceTest {
 	}
 
 	
-	  @Test public void testDeleteCustomer() {
+	  @Test
+	 void testDeleteCustomer() {
 	  
 	  Customer customer = new Customer(); customer.setCustomerId(111);
 	  customer.setCustomerName("Farru"); customer.setEmail("farru@gmail.com");
