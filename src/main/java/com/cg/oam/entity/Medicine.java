@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -21,14 +24,18 @@ public class Medicine {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="medicine_id")
 	private int medicineId;
+	 @NotNull(message = "Name cannot be null")
 	@Column(name="medicine_Name")
 	private String medicineName;
 	@Column(name="medicine_Cost")
 	private float medicineCost;
+	@PastOrPresent
 	@Column(name="mfd")
 	private LocalDate mfd;
+	@FutureOrPresent
 	@Column(name="expiry_date")
 	private LocalDate expiryDate;
+	 @NotNull(message = "companyName cannot be Blank")
 	@Column(name="company_Name")
 	private String companyName;
 	@ManyToOne

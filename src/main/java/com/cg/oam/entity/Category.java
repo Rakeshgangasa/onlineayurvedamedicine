@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 
 
@@ -19,11 +21,12 @@ public class Category {
 
 	@Column(name = "category_Id")
 	private String categoryId;
+	@NotNull(message = "Name cannot be null")
 	@Column(name = "category_name")
 	private String categoryName;
 	@Column(name = "medicine_List")
 	@OneToMany(mappedBy="category",cascade = CascadeType.ALL)
-	
+	@NotEmpty
 	private List<Medicine> medicineList;
 	
 	public String getCategoryId() {

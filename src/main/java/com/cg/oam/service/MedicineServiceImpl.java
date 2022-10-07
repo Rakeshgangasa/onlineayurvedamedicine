@@ -25,6 +25,7 @@ import com.cg.oam.repository.MedicineRepository;
 
 @Service
 public class MedicineServiceImpl implements MedicineService {
+	
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
 
@@ -60,8 +61,8 @@ public class MedicineServiceImpl implements MedicineService {
 
 
 
-   public Medicine getMedicineById(int id) {
-        Optional <Medicine> optionalMedicine= medicineRepository.findById(id);
+   public Medicine getMedicineById(int medicineId) {
+        Optional <Medicine> optionalMedicine= medicineRepository.findById(medicineId);
         
         if (optionalMedicine.isEmpty()) {
             String exceptionMessage = "MedicineId does not exist .";

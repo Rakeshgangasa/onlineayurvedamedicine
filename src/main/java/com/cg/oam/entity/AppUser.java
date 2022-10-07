@@ -2,54 +2,25 @@ package com.cg.oam.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "app_users")
 public class AppUser {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_Id")
-	private int userId;
-	@Column(name = "user_name")
-	/*
-	 * @NotBlank
-	 * 
-	 * @Min(4)
-	 * 
-	 * @Max(32)
-	 */
-	private String userName;
 
+	@Id
+	
+	@Column(name = "user_name")
+	private String userName;
 	@Column(name = "password")
-	/*
-	 * @NotBlank
-	 * 
-	 * @Min(4)
-	 * 
-	 * @Max(32)
-	 * 
-	 * @Pattern(regexp =
-	 * "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
-	 */
 	private String password;
 
 	@Column(name = "role")
 	private String role;
 
-	public AppUser() {
-		super();
-	}
-
-	public AppUser(String userName, String password, String role) {
-		super();
-		this.userName = userName;
-		this.password = password;
-		this.role = role;
-	}
+	
 
 	public String getUserName() {
 		return userName;
@@ -76,42 +47,10 @@ public class AppUser {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AppUser other = (AppUser) obj;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (!(role.equals(role)))
-			return false;
-		if (userName == null) {
-			if (other.userName != null)
-				return false;
-		} else if (!userName.equals(other.userName))
-			return false;
-		return true;
-	}
-
-	@Override
 	public String toString() {
 		return "AppUser [userName=" + userName + ", password=" + password + ", role=" + role + "]";
 	}
+
 	
+
 }

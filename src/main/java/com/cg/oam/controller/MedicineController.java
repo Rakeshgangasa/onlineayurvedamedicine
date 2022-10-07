@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.oam.entity.Medicine;
 import com.cg.oam.service.MedicineService;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/medicine")
 public class MedicineController {
@@ -32,7 +33,7 @@ public class MedicineController {
 	}
 
 	@GetMapping("/getmedicinebyid/{medicineId}")
-	public ResponseEntity<Medicine> getMedicineByid(@PathVariable("MedicineId") int medicineId) {
+	public ResponseEntity<Medicine> getMedicineByid(@PathVariable("medicineId") int medicineId) {
 		Medicine medicine = medicineService.getMedicineById(medicineId);
 		if (medicine == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -61,9 +62,10 @@ public class MedicineController {
 	
 	@DeleteMapping("/delete/{medicineId}")
 	public ResponseEntity<String> deleteProductById(@PathVariable("medicineId") int medicineId) {
-		
+
+		ResponseEntity<String> responseEntity = null;
 			medicineService.deleteMedicine(medicineId);
-		    ResponseEntity<String> responseEntity = new ResponseEntity<>("medicine Deleted Successfully!!",HttpStatus.OK);
+		    responseEntity = new ResponseEntity<>("medicine Deleted Successfully!!",HttpStatus.OK);
 		    return responseEntity;
 		}
 	@PostMapping("/medicine/save")
