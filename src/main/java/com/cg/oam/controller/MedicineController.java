@@ -61,12 +61,13 @@ public class MedicineController {
 	}
 	
 	@DeleteMapping("/delete/{medicineId}")
-	public ResponseEntity<String> deleteProductById(@PathVariable("medicineId") int medicineId) {
+	public ResponseEntity<String> deleteMedicineById(@PathVariable("medicineId") int medicineId) {
 
-		ResponseEntity<String> responseEntity = null;
-			medicineService.deleteMedicine(medicineId);
-		    responseEntity = new ResponseEntity<>("medicine Deleted Successfully!!",HttpStatus.OK);
-		    return responseEntity;
+		/*
+		 * ResponseEntity<String> responseEntity = null;
+		 */			medicineService.deleteMedicine(medicineId);
+		    return new ResponseEntity<>("medicine Deleted Successfully!!",HttpStatus.OK);
+		  
 		}
 	@PostMapping("/medicine/save")
 	public ResponseEntity<Medicine> addProduct(@RequestBody Medicine medicine) {

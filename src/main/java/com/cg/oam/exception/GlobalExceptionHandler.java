@@ -73,6 +73,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         body.put("errors", errors);
  
         return new ResponseEntity<>(body, headers, status);
+	}
+        @ExceptionHandler(ResourceNotFoundException.class) public
+        ResponseEntity<String> handleResourceNotFoundException(Exception e) {
+        ResponseEntity<String> responseEntity = new
+        ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND); return responseEntity;
+       }
+      
+      @ExceptionHandler(AuthenticationFailureException.class)
+      public ResponseEntity<String> handleAuthenticationFailureException(Exception e) {
+          ResponseEntity<String> responseEntity = new ResponseEntity<>(e.getMessage(),HttpStatus.UNAUTHORIZED);
+          return responseEntity;
+
+  
     }
 	
 }
